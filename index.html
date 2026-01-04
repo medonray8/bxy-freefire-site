@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BXY Free Fire - Control Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #101010 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           LANDING PAGE / SITE DE VENDAS
+           ============================================ */
+        
+        .landing-page {
+            display: block;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .landing-page.hidden {
+            display: none;
+        }
+
+        /* Header/Navigation */
+        .landing-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .landing-logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .landing-nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .landing-nav a {
+            color: #999;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .landing-nav a:hover {
+            color: #fff;
+        }
+
+        .btn-dashboard {
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            padding: 10px 25px;
+            border-radius: 8px;
+            color: #fff !important;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-dashboard:hover {
+            background: linear-gradient(135deg, #5a5a5a, #4a4a4a);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 80, 80, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 150px 50px 100px;
+            text-align: center;
+            background: radial-gradient(ellipse at top, rgba(50, 50, 50, 0.3), transparent);
+        }
+
+        .hero-title {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3em;
+            color: #999;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            padding: 15px 40px;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a5a5a, #4a4a4a);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(80, 80, 80, 0.5);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 50px;
+            background: rgba(15, 15, 15, 0.5);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(25, 25, 25, 0.8);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-description {
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 80px 50px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(25, 25, 25, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4a4a4a, #6a6a6a);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .pricing-card.featured {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(100, 100, 100, 0.3);
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-name {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .pricing-price {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin: 20px 0;
+            color: #fff;
+        }
+
+        .pricing-price small {
+            font-size: 0.4em;
+            color: #999;
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            color: #ccc;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: #4a4a4a;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        .btn-pricing {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-pricing:hover {
+            background: linear-gradient(135deg, #5a5a5a, #4a4a4a);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(80, 80, 80, 0.4);
+        }
+
+        /* Payment Methods */
+        .payment-section {
+            padding: 60px 50px;
+            background: rgba(15, 15, 15, 0.5);
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: rgba(25, 25, 25, 0.8);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .landing-footer {
+            padding: 40px 50px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .landing-header {
+                padding: 15px 20px;
+            }
+
+            .hero-title {
+                font-size: 2.5em;
+            }
+
+            .hero-section {
+                padding: 120px 20px 60px;
+            }
+
+            .features-section,
+            .pricing-section,
+            .payment-section {
+                padding: 60px 20px;
+            }
+
+            .landing-nav {
+                display: none;
+            }
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 40px;
+            animation: fadeIn 0.6s ease;
+            display: none;
+        }
+
+        .login-container.active {
+            display: block;
+        }
+
+        .login-box {
+            background: rgba(25, 25, 25, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .login-container.hidden {
+            animation: fadeOut 0.4s ease;
+            opacity: 0;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-container h1 {
+            font-size: 2em;
+            margin: 15px 0 5px 0;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .logo-container p {
+            margin: 0;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #999;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #6a6a6a;
+            box-shadow: 0 0 15px rgba(100, 100, 100, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #5a5a5a, #4a4a4a);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(80, 80, 80, 0.4);
+        }
+
+        .login-error {
+            background: rgba(255, 100, 100, 0.1);
+            border: 1px solid rgba(255, 100, 100, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            color: #ff6b6b;
+            text-align: center;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        .main-content {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .main-content.active {
+            display: block;
+        }
+
+        .user-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(25, 25, 25, 0.95);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+            min-width: 250px;
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .user-product {
+            color: #888;
+            font-size: 0.75em;
+        }
+
+        .user-subscription {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(15, 15, 15, 0.6);
+            border-radius: 6px;
+            margin-top: 5px;
+        }
+
+        .days-remaining {
+            color: #4caf50;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .expiration-date {
+            color: #999;
+            font-size: 0.75em;
+        }
+
+        .logout-btn {
+            background: rgba(255, 100, 100, 0.2);
+            border: 1px solid rgba(255, 100, 100, 0.3);
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 100, 100, 0.3);
+            color: #ff8888;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #999;
+            font-size: 1em;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .status.offline {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .status.remote {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            box-shadow: 0 0 8px #4caf50;
+        }
+
+        .status.offline .status-dot {
+            background: #f44336;
+            box-shadow: 0 0 8px #f44336;
+        }
+
+        .status.remote .status-dot {
+            background: #2196f3;
+            box-shadow: 0 0 8px #2196f3;
+        }
+
+        .card {
+            background: rgba(25, 25, 25, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .card h3 {
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section {
+            background: rgba(10, 10, 10, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            border-radius: 12px;
+            font-size: 0.7em;
+            margin-left: 10px;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 10px rgba(50, 50, 50, 0.3);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #5a5a5a, #4a4a4a);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(80, 80, 80, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #5a5a5a, #4a4a4a);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #6a6a6a, #5a5a5a);
+            box-shadow: 0 10px 25px rgba(90, 90, 90, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+            box-shadow: 0 10px 25px rgba(60, 60, 60, 0.4);
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+            padding: 15px 18px;
+            background: rgba(15, 15, 15, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .toggle-container:hover {
+            background: rgba(25, 25, 25, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-label {
+            font-size: 1em;
+            color: #d0d0d0;
+            font-weight: 500;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #2a2a2a;
+            transition: all 0.4s;
+            border-radius: 30px;
+            border: 2px solid #3a3a3a;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 2px;
+            background: linear-gradient(135deg, #666, #555);
+            transition: all 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, #5a5a5a, #4a4a4a);
+            border-color: #6a6a6a;
+            box-shadow: 0 0 15px rgba(80, 80, 80, 0.4);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            box-shadow: 0 2px 12px rgba(255, 255, 255, 0.5);
+        }
+
+        .select-container {
+            margin-bottom: 15px;
+        }
+
+        .select-container label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0b0;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .select-container select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(15, 15, 15, 0.8);
+            border: 2px solid #3a3a3a;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.95em;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .select-container select:hover {
+            background: rgba(25, 25, 25, 0.9);
+            border-color: #4a4a4a;
+        }
+
+        .select-container select:focus {
+            border-color: #6a6a6a;
+            box-shadow: 0 0 15px rgba(100, 100, 100, 0.3);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: rgba(80, 80, 80, 0.95);
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: rgba(60, 60, 60, 0.95);
+        }
+
+        .notification.success {
+            background: rgba(90, 90, 90, 0.95);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         LANDING PAGE / SITE DE VENDAS
+         ============================================ -->
+    <div id="landingPage" class="landing-page">
+        <!-- Header/Navigation -->
+        <header class="landing-header">
+            <div class="landing-logo">
+                🎯 BXY Free Fire
+            </div>
+            <nav class="landing-nav">
+                <a href="#features">Recursos</a>
+                <a href="#pricing">Planos</a>
+                <a href="#payment">Pagamento</a>
+                <a href="#" class="btn-dashboard" onclick="showLogin(event)">
+                    Dashboard
+                </a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">BXY Free Fire Pro</h1>
+            <p class="hero-subtitle">
+                O melhor sistema de controle remoto para Free Fire. 
+                Aimbot, ESP, Chams e muito mais. Tudo em um painel web moderno e seguro.
+            </p>
+            <div class="hero-cta">
+                <a href="#pricing" class="btn-primary">Ver Planos</a>
+                <a href="#" class="btn-primary" onclick="showLogin(event)">Acessar Dashboard</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <h2 class="section-title">Recursos Exclusivos</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3 class="feature-title">Legit Aimbot</h3>
+                    <p class="feature-description">
+                        Aim assistente natural e seguro. Configurável com FOV, smooth e keybinds personalizados.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💥</div>
+                    <h3 class="feature-title">Rage Aimbot</h3>
+                    <p class="feature-description">
+                        Modo agressivo para dominar partidas. Precisão máxima e controle total via keybinds.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👁️</div>
+                    <h3 class="feature-title">Chams (Wallhack)</h3>
+                    <p class="feature-description">
+                        Veja inimigos através de paredes. Sistema anti-detecção com injeção via memória.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Controle Web</h3>
+                    <p class="feature-description">
+                        Acesse e controle de qualquer dispositivo: PC, celular ou tablet. Interface moderna e responsiva.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Sistema de Autenticação</h3>
+                    <p class="feature-description">
+                        HWID binding, sistema de licenças e proteção contra compartilhamento não autorizado.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Updates Constantes</h3>
+                    <p class="feature-description">
+                        Atualizações frequentes para manter compatibilidade e adicionar novos recursos.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing-section">
+            <h2 class="section-title">Escolha Seu Plano</h2>
+            <div class="pricing-grid">
+                <!-- Basic Plan -->
+                <div class="pricing-card">
+                    <span class="pricing-badge">Básico</span>
+                    <h3 class="pricing-name">Unic Basic Plan</h3>
+                    <div class="pricing-price">
+                        R$ 50
+                        <small>/lifetime</small>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Legit Aimbot</li>
+                        <li>FOV Configurável</li>
+                        <li>Keybinds Personalizadas</li>
+                        <li>Controle via Web</li>
+                        <li>1 PC/HWID</li>
+                        <li>Suporte via Discord</li>
+                    </ul>
+                    <button class="btn-pricing" onclick="showLogin(event)">Adquirir Agora</button>
+                </div>
+
+                <!-- Advanced Plan -->
+                <div class="pricing-card featured">
+                    <span class="pricing-badge">Popular</span>
+                    <h3 class="pricing-name">Unic Advanced Plan</h3>
+                    <div class="pricing-price">
+                        R$ 80
+                        <small>/lifetime</small>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Tudo do Plano Basic</li>
+                        <li>Rage Aimbot</li>
+                        <li>ESP Avançado</li>
+                        <li>Chams (Wallhack)</li>
+                        <li>2 PCs/HWID</li>
+                        <li>Suporte Prioritário</li>
+                        <li>Config Auto-Save</li>
+                    </ul>
+                    <button class="btn-pricing" onclick="showLogin(event)">Adquirir Agora</button>
+                </div>
+
+                <!-- Exclusive Plan -->
+                <div class="pricing-card">
+                    <span class="pricing-badge">Premium</span>
+                    <h3 class="pricing-name">Unic Exclusive</h3>
+                    <div class="pricing-price">
+                        R$ 120
+                        <small>/lifetime</small>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Tudo do Plano Advanced</li>
+                        <li>Bypass Anti-Cheat</li>
+                        <li>Stream Mode</li>
+                        <li>Config Cloud Sync</li>
+                        <li>3 PCs/HWID</li>
+                        <li>Suporte VIP 24/7</li>
+                        <li>Updates Early Access</li>
+                        <li>Customizações Exclusivas</li>
+                    </ul>
+                    <button class="btn-pricing" onclick="showLogin(event)">Adquirir Agora</button>
+                </div>
+
+                <!-- Bypass Extra -->
+                <div class="pricing-card">
+                    <span class="pricing-badge">Add-on</span>
+                    <h3 class="pricing-name">FiveM Bypass</h3>
+                    <div class="pricing-price">
+                        R$ 30
+                        <small>/lifetime</small>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Bypass FiveM Anti-Cheat</li>
+                        <li>Compatível com todos os planos</li>
+                        <li>Funciona com qualquer servidor</li>
+                        <li>Updates inclusos</li>
+                    </ul>
+                    <button class="btn-pricing" onclick="showLogin(event)">Adquirir Agora</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Methods -->
+        <section id="payment" class="payment-section">
+            <h2 class="section-title">Formas de Pagamento</h2>
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <span style="font-size: 1.5em;">💳</span>
+                    <span>Cartão até 12x</span>
+                </div>
+                <div class="payment-method">
+                    <span style="font-size: 1.5em;">🎫</span>
+                    <span>Boleto</span>
+                </div>
+                <div class="payment-method">
+                    <span style="font-size: 1.5em;">📱</span>
+                    <span>Pix</span>
+                </div>
+                <div class="payment-method">
+                    <span style="font-size: 1.5em;">₿</span>
+                    <span>Crypto</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            <p>&copy; 2026 BXY Free Fire. Todos os direitos reservados.</p>
+            <p>Este software é apenas para fins educacionais. Use por sua conta e risco.</p>
+        </footer>
+    </div>
+
+    <!-- ============================================
+         TELA DE LOGIN
+         ============================================ -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="logo-container">
+                <div style="font-size: 3em;">🎯</div>
+                <h1>BXY Free Fire</h1>
+                <p>Control Panel</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Usuário</label>
+                    <input type="text" id="username" placeholder="Digite seu usuário" required>
+                </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="password" placeholder="Digite sua senha" required>
+                </div>
+                <button type="submit" class="login-btn">Entrar</button>
+                <div class="login-error" id="loginError">
+                    Usuário ou senha incorretos!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="mainContent" class="main-content">
+        <div class="user-info">
+            <div class="user-header">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-details">
+                    <div class="user-name" id="displayName">admin</div>
+                    <div class="user-product" id="productName">BXY Free Fire</div>
+                </div>
+            </div>
+            <div class="user-subscription">
+                <div>
+                    <div class="days-remaining" id="daysRemaining">⏰ 30 dias</div>
+                    <div class="expiration-date" id="expirationDate">Expira: 01/01/2026</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">🚪 Sair</button>
+        </div>
+
+        <div class="header">
+            <h1>🎯 BXY Free Fire Control Panel</h1>
+            <p>Controle remoto via Web Browser</p>
+            <div class="status" id="status">
+                <span class="status-dot"></span>
+                <span id="statusText">Conectado</span>
+            </div>
+        </div>
+
+        <!-- Legit Aimbot -->
+        <div class="card">
+            <h2>🎮 Legit Aimbot <span class="badge">Safe</span></h2>
+            
+            <div class="section">
+                <h3>⚙️ GENERAL</h3>
+                <button class="btn" onclick="injectLegitAimbot()">
+                    💉 Load Legit Aimbot
+                </button>
+                <div class="toggle-container">
+                    <span class="toggle-label">Enabled</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="legitEnabled" onchange="toggleLegitAimbot(this.checked)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>⚙️ SETTINGS</h3>
+                <div class="toggle-container" style="margin-bottom: 15px;">
+                    <span class="toggle-label">Enable Keybind</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="legitKeybindEnabled">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="select-container">
+                    <label>Tecla Legit</label>
+                    <select id="legitKeybind">
+                        <option value="0">Nenhuma</option>
+                        <option value="1">Mouse Left</option>
+                        <option value="2">Mouse Right</option>
+                        <option value="4">Mouse Middle</option>
+                        <option value="5">Mouse X1</option>
+                        <option value="6">Mouse X2</option>
+                        <option value="88">X Key</option>
+                        <option value="67">C Key</option>
+                        <option value="86">V Key</option>
+                        <option value="90">Z Key</option>
+                        <option value="66">B Key</option>
+                        <option value="78">N Key</option>
+                        <option value="77">M Key</option>
+                        <option value="16">Shift</option>
+                        <option value="17">Ctrl</option>
+                        <option value="18">Alt</option>
+                        <option value="32">Space</option>
+                        <option value="9">Tab</option>
+                        <option value="20">Caps Lock</option>
+                        <option value="112">F1</option>
+                        <option value="113">F2</option>
+                        <option value="114">F3</option>
+                        <option value="115">F4</option>
+                        <option value="116">F5</option>
+                        <option value="117">F6</option>
+                        <option value="118">F7</option>
+                        <option value="119">F8</option>
+                        <option value="120">F9</option>
+                        <option value="121">F10</option>
+                        <option value="122">F11</option>
+                        <option value="123">F12</option>
+                    </select>
+                </div>
+
+                <div class="select-container">
+                    <label>Modo de Ativação</label>
+                    <select id="legitKeybindMode">
+                        <option value="0">Hold (Segurar)</option>
+                        <option value="1">Toggle (Alternar)</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-secondary" onclick="updateLegitKeybind()">
+                    💾 Salvar Configuração
+                </button>
+            </div>
+        </div>
+
+        <!-- Rage Aimbot -->
+        <div class="card">
+            <h2>💥 Rage Aimbot <span class="badge">Inject</span></h2>
+            
+            <div class="section">
+                <h3>⚙️ GENERAL</h3>
+                <button class="btn btn-danger" onclick="injectRageAimbot()">
+                    💉 Load Rage Aimbot
+                </button>
+                <div class="toggle-container">
+                    <span class="toggle-label">Enabled</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="rageEnabled" onchange="toggleRageAimbot(this.checked)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>⚙️ SETTINGS</h3>
+                <div class="toggle-container" style="margin-bottom: 15px;">
+                    <span class="toggle-label">Enable Keybind</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="rageKeybindEnabled">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="select-container">
+                    <label>Tecla Rage</label>
+                    <select id="rageKeybind">
+                        <option value="0">Nenhuma</option>
+                        <option value="1">Mouse Left</option>
+                        <option value="2">Mouse Right</option>
+                        <option value="4">Mouse Middle</option>
+                        <option value="5">Mouse X1</option>
+                        <option value="6">Mouse X2</option>
+                        <option value="88">X Key</option>
+                        <option value="67">C Key</option>
+                        <option value="86">V Key</option>
+                        <option value="90">Z Key</option>
+                        <option value="66">B Key</option>
+                        <option value="78">N Key</option>
+                        <option value="77">M Key</option>
+                        <option value="16">Shift</option>
+                        <option value="17">Ctrl</option>
+                        <option value="18">Alt</option>
+                        <option value="32">Space</option>
+                        <option value="9">Tab</option>
+                        <option value="20">Caps Lock</option>
+                        <option value="112">F1</option>
+                        <option value="113">F2</option>
+                        <option value="114">F3</option>
+                        <option value="115">F4</option>
+                        <option value="116">F5</option>
+                        <option value="117">F6</option>
+                        <option value="118">F7</option>
+                        <option value="119">F8</option>
+                        <option value="120">F9</option>
+                        <option value="121">F10</option>
+                        <option value="122">F11</option>
+                        <option value="123">F12</option>
+                    </select>
+                </div>
+
+                <div class="select-container">
+                    <label>Modo de Ativação</label>
+                    <select id="rageKeybindMode">
+                        <option value="0">Hold (Segurar)</option>
+                        <option value="1">Toggle (Alternar)</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-danger" onclick="updateRageKeybind()">
+                    💾 Salvar Configuração
+                </button>
+            </div>
+        </div>
+
+        <!-- Chams (Wallhack) -->
+        <div class="card">
+            <h2>👁️ Chams (Wallhack) <span class="badge">Inject</span></h2>
+            
+            <div class="section">
+                <h3>⚙️ GENERAL</h3>
+                <button class="btn" onclick="injectChams()">
+                    💉 Load Chams DLL
+                </button>
+                <div class="toggle-container">
+                    <span class="toggle-label">Enabled</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="visualsChams" onchange="toggleChams()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load Bypass -->
+        <div class="card">
+            <h2>🔓 Load Bypass</h2>
+            
+            <div class="section">
+                <button class="btn" onclick="loadBypass()">
+                    🚀 Load Bypass
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // ============================================
+        // 🔧 CONFIGURAÇÃO DE HOSPEDAGEM
+        // ============================================
+        const CONFIG = {
+            // Modo de operação: 'local', 'remote', 'auto'
+            mode: 'remote',
+            
+            // URLs da API do Cheat
+            localAPI: 'http://localhost:8080',
+            remoteAPI: 'https://discloud-server.onrender.com', // URL do Render
+            
+            // URL da API de Autenticação
+            authAPI: 'https://duplicatinor3000.discloud.app/auth',
+            
+            // Timeout para detecção automática (ms)
+            timeout: 3000
+        };
+
+        // Detectar automaticamente qual API usar
+        let API_URL = CONFIG.localAPI;
+        const AUTH_API_URL = CONFIG.authAPI;
+
+        async function detectAPI() {
+            if (CONFIG.mode === 'local') {
+                API_URL = CONFIG.localAPI;
+                console.log('🏠 Modo LOCAL ativado:', API_URL);
+                return;
+            }
+            
+            if (CONFIG.mode === 'remote') {
+                API_URL = CONFIG.remoteAPI;
+                console.log('🌐 Modo REMOTO ativado:', API_URL);
+                return;
+            }
+
+            // Modo AUTO: tenta local primeiro, depois remoto
+            console.log('🔍 Detectando API automaticamente...');
+            
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
+                
+                const response = await fetch(`${CONFIG.localAPI}/api/status`, {
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (response.ok) {
+                    API_URL = CONFIG.localAPI;
+                    console.log('✅ API LOCAL detectada:', API_URL);
+                    return;
+                }
+            } catch (error) {
+                console.log('⚠️ API local não disponível, tentando remota...');
+            }
+
+            // Tenta API remota
+            try {
+                const response = await fetch(`${CONFIG.remoteAPI}/api/status`);
+                if (response.ok) {
+                    API_URL = CONFIG.remoteAPI;
+                    console.log('✅ API REMOTA detectada:', API_URL);
+                    return;
+                }
+            } catch (error) {
+                console.log('❌ Nenhuma API disponível');
+            }
+
+            // Fallback para local
+            API_URL = CONFIG.localAPI;
+            console.log('⚠️ Usando API local como fallback');
+        }
+
+        // Executar detecção ao carregar
+        detectAPI();
+
+        // ============================================
+        // NAVEGAÇÃO ENTRE LANDING PAGE E LOGIN
+        // ============================================
+        
+        function showLogin(event) {
+            if (event) event.preventDefault();
+            
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('loginScreen').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function showLanding() {
+            document.getElementById('landingPage').classList.remove('hidden');
+            document.getElementById('loginScreen').classList.remove('active');
+            document.getElementById('mainContent').classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && !href.includes('onclick')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Gerar HWID baseado no navegador
+        function generateHWID() {
+            const nav = navigator;
+            const screen = window.screen;
+            let hwid = 'BXY-WEB-';
+            
+            // Combinar informações do navegador
+            hwid += nav.userAgent.replace(/\s/g, '').substring(0, 20) + '-';
+            hwid += screen.width + 'x' + screen.height + '-';
+            hwid += nav.hardwareConcurrency || '4';
+            
+            // Hash simples
+            let hash = 0;
+            for (let i = 0; i < hwid.length; i++) {
+                const char = hwid.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            return 'BXY-' + Math.abs(hash).toString(16).toUpperCase();
+        }
+
+        // Obter IP local (simplificado para web)
+        function getLocalIP() {
+            return 'web-client';
+        }
+
+        // Login System com API Real
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginError = document.getElementById('loginError');
+            const loginBtn = event.target.querySelector('button[type="submit"]');
+            
+            // Desabilitar botão durante o login
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Entrando...';
+            loginError.classList.remove('show');
+            
+            try {
+                const hwid = generateHWID();
+                const ipAddress = getLocalIP();
+                
+                // Fazer requisição para API real
+                const response = await fetch(`${AUTH_API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        hwid: hwid,
+                        ipAddress: ipAddress
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Resposta da API:', data); // Debug
+                
+                // Verificar se login foi bem-sucedido (aceita vários formatos)
+                const isSuccess = data.success === true || (data.success !== false && data.user);
+                const user = data.user || data;
+                
+                if (isSuccess && user && user.username) {
+                    // Verificar se está banido
+                    if (user.isBanned === true) {
+                        loginError.textContent = '❌ Usuário banido!';
+                        loginError.classList.add('show');
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Entrar';
+                        return;
+                    }
+                    
+                    // Verificar se expirou (aceita null como válido)
+                    if (user.daysRemaining !== null && user.daysRemaining !== undefined && user.daysRemaining <= 0) {
+                        loginError.textContent = '⏰ Assinatura expirada!';
+                        loginError.classList.add('show');
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Entrar';
+                        return;
+                    }
+                    
+                    console.log('Login bem-sucedido! Redirecionando...'); // Debug
+                    
+                    // Salvar dados do usuário
+                    sessionStorage.setItem('loggedIn', 'true');
+                    sessionStorage.setItem('username', user.username || username);
+                    sessionStorage.setItem('productName', user.productName || 'BXY Free Fire');
+                    sessionStorage.setItem('daysRemaining', user.daysRemaining || '999');
+                    sessionStorage.setItem('expirationDate', user.expirationDate || 'Vitalício');
+                    
+                    // Preencher informações antes de mostrar
+                    document.getElementById('displayName').textContent = user.username || username;
+                    document.getElementById('userAvatar').textContent = (user.username || username).charAt(0).toUpperCase();
+                    document.getElementById('productName').textContent = user.productName || 'BXY Free Fire';
+                    document.getElementById('daysRemaining').textContent = `⏰ ${user.daysRemaining || '999'} dias`;
+                    document.getElementById('expirationDate').textContent = `Expira: ${user.expirationDate || 'Vitalício'}`;
+                    
+                    // Animação de login bem-sucedido
+                    const loginScreen = document.getElementById('loginScreen');
+                    const mainContent = document.getElementById('mainContent');
+                    
+                    loginScreen.classList.add('hidden');
+                    
+                    setTimeout(() => {
+                        loginScreen.style.display = 'none';
+                        mainContent.style.display = 'block';
+                        mainContent.classList.add('active');
+                        
+                        console.log('Tela principal ativada!'); // Debug
+                        
+                        // Mostrar notificação de boas-vindas
+                        setTimeout(() => {
+                            showNotification(`✅ Bem-vindo ${user.username || username}! ${user.daysRemaining || '999'} dias restantes.`);
+                        }, 100);
+                        
+                        initializeApp();
+                    }, 400);
+                    
+                } else {
+                    // Login falhou
+                    console.log('Login falhou:', data); // Debug
+                    loginError.textContent = data.message || '❌ Usuário ou senha incorretos!';
+                    loginError.classList.add('show');
+                    document.getElementById('password').value = '';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Entrar';
+                }
+                
+            } catch (error) {
+                console.error('Erro no login:', error);
+                loginError.textContent = '❌ Erro de conexão com o servidor!';
+                loginError.classList.add('show');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Entrar';
+            }
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            showLanding();
+        }
+
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification ' + (isError ? 'error' : 'success') + ' show';
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // API Functions
+        async function injectLegitAimbot() {
+            try {
+                const response = await fetch(`${API_URL}/api/legit/inject`, { method: 'POST' });
+                const data = await response.json();
+                showNotification(data.message || 'Legit Aimbot injetado com sucesso!', !data.success);
+                
+                // Ativar checkbox automaticamente após injeção bem-sucedida
+                if (data.success) {
+                    document.getElementById('legitEnabled').checked = true;
+                    await toggleLegitAimbot(true);
+                }
+            } catch (error) {
+                showNotification('Erro ao injetar Legit Aimbot', true);
+            }
+        }
+
+        async function toggleLegitAimbot(enabled) {
+            try {
+                const response = await fetch(`${API_URL}/api/legit/toggle`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled })
+                });
+                const data = await response.json();
+                showNotification(data.message || `Legit Aimbot ${enabled ? 'ativado' : 'desativado'}!`, !data.success);
+            } catch (error) {
+                showNotification('Erro ao alterar Legit Aimbot', true);
+            }
+        }
+
+        async function injectRageAimbot() {
+            try {
+                const response = await fetch(`${API_URL}/api/rage/inject`, { method: 'POST' });
+                const data = await response.json();
+                showNotification(data.message || 'Rage Aimbot injetado com sucesso!', !data.success);
+                
+                // Ativar checkbox automaticamente após injeção bem-sucedida
+                if (data.success) {
+                    document.getElementById('rageEnabled').checked = true;
+                    await toggleRageAimbot(true);
+                }
+            } catch (error) {
+                showNotification('Erro ao injetar Rage Aimbot', true);
+            }
+        }
+
+        async function toggleRageAimbot(enabled) {
+            try {
+                const response = await fetch(`${API_URL}/api/rage/toggle`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled })
+                });
+                const data = await response.json();
+                showNotification(data.message || `Rage Aimbot ${enabled ? 'ativado' : 'desativado'}!`, !data.success);
+            } catch (error) {
+                showNotification('Erro ao alterar Rage Aimbot', true);
+            }
+        }
+
+        async function injectChams() {
+            try {
+                const response = await fetch(`${API_URL}/api/chams/inject`, { method: 'POST' });
+                const data = await response.json();
+                showNotification(data.message || 'Chams DLL injetada com sucesso!', !data.success);
+            } catch (error) {
+                showNotification('Erro ao injetar Chams', true);
+            }
+        }
+
+        async function toggleChams() {
+            const enabled = document.getElementById('visualsChams').checked;
+            try {
+                const response = await fetch(`${API_URL}/api/chams/toggle`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled })
+                });
+                const data = await response.json();
+                showNotification(data.message || `Chams ${enabled ? 'ativado' : 'desativado'}!`, !data.success);
+            } catch (error) {
+                showNotification('Erro ao alterar Chams', true);
+            }
+        }
+
+        async function updateLegitKeybind() {
+            const enabled = document.getElementById('legitKeybindEnabled').checked;
+            const keybind = parseInt(document.getElementById('legitKeybind').value);
+            const keybindmode = parseInt(document.getElementById('legitKeybindMode').value);
+            
+            try {
+                const response = await fetch(`${API_URL}/api/legitkeybind`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled, keybind, keybindmode })
+                });
+                const data = await response.json();
+                showNotification(data.message || 'Keybind Legit salva com sucesso!', !data.success);
+            } catch (error) {
+                showNotification('Erro ao salvar keybind', true);
+            }
+        }
+
+        async function updateRageKeybind() {
+            const enabled = document.getElementById('rageKeybindEnabled').checked;
+            const keybind = parseInt(document.getElementById('rageKeybind').value);
+            const keybindmode = parseInt(document.getElementById('rageKeybindMode').value);
+            
+            try {
+                const response = await fetch(`${API_URL}/api/ragekeybind`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled, keybind, keybindmode })
+                });
+                const data = await response.json();
+                showNotification(data.message || 'Keybind Rage salva com sucesso!', !data.success);
+            } catch (error) {
+                showNotification('Erro ao salvar keybind', true);
+            }
+        }
+
+        async function updateSettings() {
+            const topmost = document.getElementById('settingsTopmost').checked;
+            const stream = parseInt(document.getElementById('settingsStream').value);
+            
+            try {
+                const response = await fetch(`${API_URL}/api/settings`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topmost, stream })
+                });
+                const data = await response.json();
+                showNotification(data.message || 'Configurações salvas!', !data.success);
+            } catch (error) {
+                showNotification('Erro ao salvar configurações', true);
+            }
+        }
+
+        async function loadConfig() {
+            try {
+                const response = await fetch(`${API_URL}/api/config`, { 
+                    method: 'GET',
+                    cache: 'no-cache'
+                });
+                const data = await response.json();
+                showNotification('Config recarregada com sucesso!', false);
+            } catch (error) {
+                console.error('Erro ao recarregar config:', error);
+                showNotification('Erro ao recarregar config', true);
+            }
+        }
+
+        async function checkStatus() {
+            const statusElement = document.getElementById('status');
+            const statusTextElement = document.getElementById('statusText');
+            
+            try {
+                const response = await fetch(`${API_URL}/api/status`, {
+                    method: 'GET',
+                    cache: 'no-cache'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Determinar se é local ou remoto
+                    const isLocal = API_URL.includes('localhost') || API_URL.includes('127.0.0.1');
+                    
+                    statusElement.className = isLocal ? 'status' : 'status remote';
+                    statusTextElement.textContent = isLocal ? '🏠 Conectado (Local)' : '🌐 Conectado (Remoto)';
+                    
+                    return true;
+                }
+            } catch (error) {
+                statusElement.className = 'status offline';
+                statusTextElement.textContent = '❌ Offline';
+                return false;
+            }
+        }
+
+        async function loadBypass() {
+            try {
+                const response = await fetch(`${API_URL}/api/bypass`, { method: 'POST' });
+                const data = await response.json();
+                showNotification(data.message || 'Bypass carregado! Aplicativo será fechado...', !data.success);
+            } catch (error) {
+                showNotification('Erro ao carregar bypass', true);
+            }
+        }
+
+        async function emergencyStop() {
+            if (confirm('Deseja realmente executar a parada de emergência?')) {
+                try {
+                    document.getElementById('legitEnabled').checked = false;
+                    document.getElementById('rageEnabled').checked = false;
+                    document.getElementById('visualsChams').checked = false;
+                    
+                    await toggleLegitAimbot(false);
+                    await toggleRageAimbot(false);
+                    await toggleChams();
+                    
+                    showNotification('Parada de emergência executada!');
+                } catch (error) {
+                    showNotification('Erro na parada de emergência', true);
+                }
+            }
+        }
+
+        function initializeApp() {
+            // Atualizar informações do usuário na UI
+            const username = sessionStorage.getItem('username');
+            const productName = sessionStorage.getItem('productName') || 'BXY Free Fire';
+            const daysRemaining = sessionStorage.getItem('daysRemaining') || '0';
+            const expirationDate = sessionStorage.getItem('expirationDate') || 'N/A';
+            
+            document.getElementById('displayName').textContent = username;
+            document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+            document.getElementById('productName').textContent = productName;
+            document.getElementById('daysRemaining').textContent = `⏰ ${daysRemaining} dias`;
+            document.getElementById('expirationDate').textContent = `Expira: ${expirationDate}`;
+            
+            // Verificar status do cheat
+            checkStatus();
+            setInterval(checkStatus, 30000);
+        }
+
+        // Check if already logged in
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').classList.add('active');
+            initializeApp();
+        } else {
+            // Mostrar landing page por padrão
+            document.getElementById('landingPage').classList.remove('hidden');
+            document.getElementById('loginScreen').classList.remove('active');
+            document.getElementById('mainContent').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
