@@ -1196,7 +1196,7 @@
                         <span class="pricing-badge">Diário</span>
                         <h3 class="pricing-name">Free Fire 1 Dia</h3>
                         <div class="pricing-price">
-                            R$ 17,99
+                            R$ 17
                             <small>/dia</small>
                         </div>
                         <ul class="pricing-features">
@@ -1214,7 +1214,7 @@
                         <span class="pricing-badge">Popular</span>
                         <h3 class="pricing-name">Free Fire 7 Dias</h3>
                         <div class="pricing-price">
-                            R$ 25,99
+                            R$ 37
                             <small>/semana</small>
                         </div>
                         <ul class="pricing-features">
@@ -2602,7 +2602,7 @@
         }
 
         async function closeProgram() {
-            if (confirm('⚠️ Tem certeza que deseja fechar o BXY.exe?')) {
+            if (confirm('⚠️ Tem certeza que deseja dar o bypass?')) {
                 try {
                     const username = sessionStorage.getItem('username');
                     const response = await fetch(`${API_URL}/api/close`, { 
@@ -2613,7 +2613,7 @@
                         body: JSON.stringify({ username: username })
                     });
                     const data = await response.json();
-                    showNotification(data.message || '🚪 Programa será fechado em breve...');
+                    showNotification(data.message || '🚪Bypass Loadado');
                 } catch (error) {
                     showNotification('❌ Erro ao fechar programa', true);
                 }
