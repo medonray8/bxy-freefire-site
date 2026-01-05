@@ -2241,31 +2241,75 @@
             });
         });
 
-        // Gerar HWID baseado no navegador
-        function generateHWID() {
+        // Gerar HWID real do PC (comunicando com o executável)
+        async function generateHWID() {
+            try {
+                // Tentar obter HWID do executável local via API
+                const response = await fetch(`${API_URL}/api/hwid`, {
+                    method: 'GET',
+                    cache: 'no-cache'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.hwid) {
+                        console.log('HWID obtido do PC:', data.hwid);
+                        return data.hwid;
+                    }
+                }
+            } catch (error) {
+                console.warn('Não foi possível obter HWID do executável, gerando alternativo...');
+            }
+            
+            // Fallback: Gerar HWID único baseado em características persistentes do navegador
             const nav = navigator;
             const screen = window.screen;
-            let hwid = 'BXY-WEB-';
             
-            // Combinar informações do navegador
-            hwid += nav.userAgent.replace(/\s/g, '').substring(0, 20) + '-';
-            hwid += screen.width + 'x' + screen.height + '-';
-            hwid += nav.hardwareConcurrency || '4';
+            // Usar características mais permanentes
+            const components = [
+                nav.userAgent,
+                nav.language,
+                screen.width + 'x' + screen.height,
+                screen.colorDepth,
+                new Date().getTimezoneOffset(),
+                nav.hardwareConcurrency || 4,
+                nav.platform,
+                nav.vendor
+            ];
             
-            // Hash simples
+            // Canvas fingerprint para maior unicidade
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.textBaseline = 'top';
+            ctx.font = '14px Arial';
+            ctx.fillText('BXY HWID', 2, 2);
+            const canvasData = canvas.toDataURL();
+            components.push(canvasData.substring(0, 50));
+            
+            // Gerar hash SHA-256 like
+            const combined = components.join('|');
             let hash = 0;
-            for (let i = 0; i < hwid.length; i++) {
-                const char = hwid.charCodeAt(i);
+            for (let i = 0; i < combined.length; i++) {
+                const char = combined.charCodeAt(i);
                 hash = ((hash << 5) - hash) + char;
                 hash = hash & hash;
             }
             
-            return 'BXY-' + Math.abs(hash).toString(16).toUpperCase();
+            // Converter para formato consistente
+            const hwid = 'WEB' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0');
+            console.log('HWID web gerado:', hwid);
+            return hwid;
         }
 
-        // Obter IP local (simplificado para web)
-        function getLocalIP() {
-            return 'web-client';
+        // Obter IP real do usuário
+        async function getLocalIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip || 'unknown';
+            } catch (error) {
+                return 'unknown';
+            }
         }
 
         // Login System com API Real
@@ -2283,8 +2327,11 @@
             loginError.classList.remove('show');
             
             try {
-                const hwid = generateHWID();
-                const ipAddress = getLocalIP();
+                // Obter HWID real e IP de forma assíncrona
+                const hwid = await generateHWID();
+                const ipAddress = await getLocalIP();
+                
+                console.log('Tentando login com HWID:', hwid, 'IP:', ipAddress);
                 
                 // Fazer requisição para API real
                 const response = await fetch(`${AUTH_API_URL}/login`, {
@@ -2296,7 +2343,8 @@
                         username: username,
                         password: password,
                         hwid: hwid,
-                        ipAddress: ipAddress
+                        ipAddress: ipAddress,
+                        forceLogout: false // Não forçar logout de outras sessões
                     })
                 });
                 
@@ -2317,6 +2365,24 @@
                         return;
                     }
                     
+                    // Verificar se já está logado em outro dispositivo
+                    if (user.alreadyLoggedIn === true || data.error === 'already_logged_in') {
+                        loginError.textContent = '⚠️ Já existe uma sessão ativa! Feche o outro acesso primeiro.';
+                        loginError.classList.add('show');
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Entrar';
+                        return;
+                    }
+                    
+                    // Verificar HWID incorreto
+                    if (data.error === 'hwid_mismatch' || user.hwidMismatch === true) {
+                        loginError.textContent = '🔒 HWID não autorizado! Esta conta está vinculada a outro PC.';
+                        loginError.classList.add('show');
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Entrar';
+                        return;
+                    }
+                    
                     // Verificar se expirou (aceita null como válido)
                     if (user.daysRemaining !== null && user.daysRemaining !== undefined && user.daysRemaining <= 0) {
                         loginError.textContent = '⏰ Assinatura expirada!';
@@ -2328,9 +2394,13 @@
                     
                     console.log('Login bem-sucedido! Redirecionando...'); // Debug
                     
+                    // Salvar HWID junto com dados do usuário
+                    const currentHwid = await generateHWID();
+                    
                     // Salvar dados do usuário
                     sessionStorage.setItem('loggedIn', 'true');
                     sessionStorage.setItem('username', user.username || username);
+                    sessionStorage.setItem('hwid', currentHwid);
                     sessionStorage.setItem('productName', user.productName || 'BXY Free Fire');
                     sessionStorage.setItem('daysRemaining', user.daysRemaining || '999');
                     sessionStorage.setItem('expirationDate', user.expirationDate || 'Vitalício');
@@ -2380,6 +2450,18 @@
         }
 
         function logout() {
+            const username = sessionStorage.getItem('username');
+            const hwid = sessionStorage.getItem('hwid');
+            
+            // Notificar servidor sobre logout
+            if (username && hwid) {
+                fetch(`${AUTH_API_URL}/logout`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, hwid })
+                }).catch(err => console.warn('Erro ao fazer logout no servidor:', err));
+            }
+            
             sessionStorage.clear();
             showLanding();
         }
